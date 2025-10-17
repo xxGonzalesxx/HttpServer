@@ -28,7 +28,7 @@ public class Main {
         <p>Порт: %s | Время: %s</p>
       </body>
     </html>
-    """.formatted(port, java.time.LocalDateTime.now());
+    """;
 
                 exchange.getResponseHeaders().set("Content-Type", "text/html; charset=utf-8");
                 exchange.sendResponseHeaders(200, response.getBytes().length);
