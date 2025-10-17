@@ -25,7 +25,6 @@ public class Main {
         <center><h1>Нежелательные люди!</h1></center>
         <br>
         <center><img src="https://i.ibb.co/bg2MvFSv/image.jpg" width="500"></center>
-        <p>Порт: %s | Время: %s</p>
       </body>
     </html>
     """;
