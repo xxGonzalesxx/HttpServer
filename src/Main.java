@@ -4,7 +4,7 @@ import java.net.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8080"));
+        int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "10000"));
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
         // Главная страница
