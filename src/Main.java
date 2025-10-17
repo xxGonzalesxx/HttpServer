@@ -20,15 +20,15 @@ public class Main {
                 System.out.println("📨 Received request from: " + exchange.getRemoteAddress());
 
                 String response = """
-                    <html>
-                        <body style="font-family: Arial; text-align: center; padding: 50px;">
-                            <h1>🎉 GonzalesLab WORKS!</h1>
-                            <p><strong>Server is running on port:</strong> %d</p>
-                            <p><strong>Time:</strong> %s</p>
-                            <p><strong>Environment:</strong> Render</p>
-                        </body>
-                    </html>
-                    """.formatted(port, java.time.LocalDateTime.now());
+    <html>
+      <body bgcolor="gold">
+        <center><h1>Нежелательные люди!</h1></center>
+        <br>
+        <center><img src="https://i.ibb.co/bg2MvFSv/image.jpg" width="500"></center>
+        <p>Порт: %s | Время: %s</p>
+      </body>
+    </html>
+    """.formatted(port, java.time.LocalDateTime.now());
 
                 exchange.getResponseHeaders().set("Content-Type", "text/html; charset=utf-8");
                 exchange.sendResponseHeaders(200, response.getBytes().length);
