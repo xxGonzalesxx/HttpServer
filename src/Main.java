@@ -14,6 +14,22 @@ public class Main {
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress("0.0.0.0", port), 0);
 
+            // Добавь этот контекст ПЕРЕД статическим хендлером
+            server.createContext("/debug", exchange -> {
+                String debugInfo = """
+                    Current dir: %s
+                    Files in current dir: %s
+                    """.formatted(
+                        System.getProperty("user.dir"),
+                        String.join(", ", new File(".").list())
+                );
+
+                exchange.getResponseHeaders().set("Content-Type", "text/plain");
+                exchange.sendResponseHeaders(200, debugInfo.length());
+                exchange.getResponseBody().write(debugInfo.getBytes());
+                exchange.close();
+            });
+
             // Раздача статических файлов
             server.createContext("/", new StaticFileHandler());
 
@@ -37,16 +53,19 @@ public class Main {
             if (path.equals("/")) path = "/index.html";
 
             try {
-                // ИСПРАВЛЕННЫЙ ПУТЬ
-                byte[] fileBytes = Files.readAllBytes(Paths.get("src/static" + path));
+                // АБСОЛЮТНЫЙ ПУТЬ
+                String baseDir = System.getProperty("user.dir");
+                String fullPath = baseDir + "/src/static" + path;
+                System.out.println("🔍 Searching: " + fullPath);
 
-                String contentType = "text/html";
-                exchange.getResponseHeaders().set("Content-Type", contentType);
+                byte[] fileBytes = Files.readAllBytes(Paths.get(fullPath));
+
+                exchange.getResponseHeaders().set("Content-Type", "text/html");
                 exchange.sendResponseHeaders(200, fileBytes.length);
                 exchange.getResponseBody().write(fileBytes);
 
             } catch (IOException e) {
-                String response = "404 - File Not Found: " + path;
+                String response = "404 - File: " + path;
                 exchange.sendResponseHeaders(404, response.length());
                 exchange.getResponseBody().write(response.getBytes());
             } finally {
