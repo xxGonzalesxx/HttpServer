@@ -37,23 +37,16 @@ public class Main {
             if (path.equals("/")) path = "/index.html";
 
             try {
-                // Читаем файл из папки static
-                byte[] fileBytes = Files.readAllBytes(Paths.get("src/static" + path));
+                // ПРАВИЛЬНЫЙ ПУТЬ - без src/
+                byte[] fileBytes = Files.readAllBytes(Paths.get("static" + path));
 
-                // Определяем Content-Type
                 String contentType = "text/html";
-                if (path.endsWith(".css")) contentType = "text/css";
-                if (path.endsWith(".js")) contentType = "application/javascript";
-                if (path.endsWith(".png")) contentType = "image/png";
-                if (path.endsWith(".jpg")) contentType = "image/jpeg";
-
                 exchange.getResponseHeaders().set("Content-Type", contentType);
                 exchange.sendResponseHeaders(200, fileBytes.length);
                 exchange.getResponseBody().write(fileBytes);
 
             } catch (IOException e) {
-                // Если файл не найден - 404
-                String response = "404 - File Not Found";
+                String response = "404 - File Not Found: " + path;
                 exchange.sendResponseHeaders(404, response.length());
                 exchange.getResponseBody().write(response.getBytes());
             } finally {
