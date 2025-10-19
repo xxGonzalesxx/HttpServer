@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SGProducts</title>
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 100%);
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .logo-img {
+            width: 100px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        .container {
+            text-align: center;
+            padding-top: 250px;
+        }
+
+        .main-title {
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00,
+                         0 0 20px #00ff00,
+                         0 0 40px #00ff00,
+                         0 0 80px #00ff00;
+            font-size: 3em;
+            margin: 0;
+            transition: text-shadow 0.3s ease;
+        }
+
+        .main-title:hover {
+            text-shadow: 0 0 15px #00ff00,
+                         0 0 30px #00ff00,
+                         0 0 60px #00ff00,
+                         0 0 100px #00ff00;
+        }
+
+        .slogan-text {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            font-weight: 300;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        .nav-top {
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 60px;
+        }
+
+        .nav-link {
+            color: #f5f103;
+            text-shadow: 0 0 10px rgba(245, 241, 3, 0.5);
+            margin: 0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: #00ff00;
+            text-shadow: 0 0 15px #00ff00;
+            transform: translateY(-2px);
+        }
+
+        /* Футер */
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .nav-top {
+                gap: 30px;
+                top: 40px;
+            }
+
+            .main-title {
+                font-size: 2em;
+            }
+
+            .container {
+                padding-top: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Логотип -->
+<div class="logo">
+    <img class="logo-img" src="https://i.ibb.co/nq9050H1/logo.png" alt="Logo">
+</div>
+
+<!-- Навигация -->
+<div class="nav-top">
+    <a class="nav-link">Projects</a>
+    <a class="nav-link">Info</a>
+    <a class="nav-link">Contacts</a>
+</div>
+
+<!-- Основной контент -->
+<div class="container">
+    <h1 class="main-title">Super Chack</h1>
+    <h2 class="slogan-text">"From Wild Ideas to Working Code"</h2>
+</div>
+
+<!-- Футер -->
+<div class="footer">
+    © 2025 SGProducts. Turning ideas into reality.
+</div>
+</body>
+</html>
