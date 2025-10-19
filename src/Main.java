@@ -1,54 +1,64 @@
 import com.sun.net.httpserver.*;
 import java.io.*;
 import java.net.*;
+import java.nio.file.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        // Берём порт из переменной окружения Render
         String portStr = System.getenv("PORT");
         int port = (portStr != null) ? Integer.parseInt(portStr) : 8080;
 
-        System.out.println("🔧 Starting server...");
+        System.out.println("🔧 Starting Portfolio Server...");
         System.out.println("📡 Port: " + port);
 
         try {
-            // Создаем сервер на всех интерфейсах
             HttpServer server = HttpServer.create(new InetSocketAddress("0.0.0.0", port), 0);
 
-            // Простейший endpoint для теста
-            server.createContext("/", exchange -> {
-                System.out.println("📨 Received request from: " + exchange.getRemoteAddress());
-
-                String response = """
-    <html>
-      <body bgcolor="gold">
-        <center><h1>Нежелательные люди!</h1></center>
-        <br>
-        <center><img src="https://i.ibb.co/bg2MvFSv/image.jpg" width="500"></center>
-      </body>
-    </html>
-    """;
-
-                exchange.getResponseHeaders().set("Content-Type", "text/html; charset=utf-8");
-                exchange.sendResponseHeaders(200, response.getBytes().length);
-                exchange.getResponseBody().write(response.getBytes());
-                exchange.close();
-
-                System.out.println("✅ Sent response");
-            });
+            // Раздача статических файлов
+            server.createContext("/", new StaticFileHandler());
 
             server.setExecutor(null);
             server.start();
 
-            System.out.println("✅ SERVER STARTED SUCCESSFULLY!");
+            System.out.println("✅ PORTFOLIO SERVER STARTED!");
             System.out.println("🌐 Available at: http://0.0.0.0:" + port);
 
-            // Держим поток alive
             Thread.currentThread().join();
-
         } catch (Exception e) {
             System.out.println("❌ SERVER ERROR: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    static class StaticFileHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            String path = exchange.getRequestURI().getPath();
+            if (path.equals("/")) path = "/index.html";
+
+            try {
+                // Читаем файл из папки static
+                byte[] fileBytes = Files.readAllBytes(Paths.get("src/static" + path));
+
+                // Определяем Content-Type
+                String contentType = "text/html";
+                if (path.endsWith(".css")) contentType = "text/css";
+                if (path.endsWith(".js")) contentType = "application/javascript";
+                if (path.endsWith(".png")) contentType = "image/png";
+                if (path.endsWith(".jpg")) contentType = "image/jpeg";
+
+                exchange.getResponseHeaders().set("Content-Type", contentType);
+                exchange.sendResponseHeaders(200, fileBytes.length);
+                exchange.getResponseBody().write(fileBytes);
+
+            } catch (IOException e) {
+                // Если файл не найден - 404
+                String response = "404 - File Not Found";
+                exchange.sendResponseHeaders(404, response.length());
+                exchange.getResponseBody().write(response.getBytes());
+            } finally {
+                exchange.close();
+            }
         }
     }
 }
