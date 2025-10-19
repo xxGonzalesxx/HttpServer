@@ -53,8 +53,8 @@ public class Main {
             if (path.equals("/")) path = "/index.html";
 
             try {
-                // ПРАВИЛЬНЫЙ ПУТЬ - без /src/
-                String fullPath = "static" + path;
+                // ПРАВИЛЬНЫЙ ПУТЬ для текущего Dockerfile
+                String fullPath = "src/static" + path;
                 System.out.println("🔍 Searching: " + fullPath);
 
                 byte[] fileBytes = Files.readAllBytes(Paths.get(fullPath));
