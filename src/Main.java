@@ -37,8 +37,8 @@ public class Main {
             if (path.equals("/")) path = "/index.html";
 
             try {
-                // ПРАВИЛЬНЫЙ ПУТЬ - без src/
-                byte[] fileBytes = Files.readAllBytes(Paths.get("static" + path));
+                // ИСПРАВЛЕННЫЙ ПУТЬ
+                byte[] fileBytes = Files.readAllBytes(Paths.get("src/static" + path));
 
                 String contentType = "text/html";
                 exchange.getResponseHeaders().set("Content-Type", contentType);
