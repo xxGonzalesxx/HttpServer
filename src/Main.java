@@ -17,9 +17,9 @@ public class Main {
             // Добавь этот контекст ПЕРЕД статическим хендлером
             server.createContext("/debug", exchange -> {
                 String debugInfo = """
-                    Current dir: %s
-                    Files in current dir: %s
-                    """.formatted(
+                        Current dir: %s
+                        Files in current dir: %s
+                        """.formatted(
                         System.getProperty("user.dir"),
                         String.join(", ", new File(".").list())
                 );
@@ -53,18 +53,19 @@ public class Main {
             if (path.equals("/")) path = "/index.html";
 
             try {
-                // АБСОЛЮТНЫЙ ПУТЬ
-                String baseDir = System.getProperty("user.dir");
-                String fullPath = baseDir + "/src/static" + path;
+                // ПРАВИЛЬНЫЙ ПУТЬ - без /src/
+                String fullPath = "static" + path;
                 System.out.println("🔍 Searching: " + fullPath);
 
                 byte[] fileBytes = Files.readAllBytes(Paths.get(fullPath));
+                System.out.println("✅ File found! Size: " + fileBytes.length + " bytes");
 
                 exchange.getResponseHeaders().set("Content-Type", "text/html");
                 exchange.sendResponseHeaders(200, fileBytes.length);
                 exchange.getResponseBody().write(fileBytes);
 
             } catch (IOException e) {
+                System.out.println("❌ File NOT found: " + e.getMessage());
                 String response = "404 - File: " + path;
                 exchange.sendResponseHeaders(404, response.length());
                 exchange.getResponseBody().write(response.getBytes());
