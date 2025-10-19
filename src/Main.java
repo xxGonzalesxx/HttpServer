@@ -1,7 +1,6 @@
 import com.sun.net.httpserver.*;
 import java.io.*;
 import java.net.*;
-import java.nio.file.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -14,64 +13,105 @@ public class Main {
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress("0.0.0.0", port), 0);
 
-            // Добавь этот контекст ПЕРЕД статическим хендлером
-            server.createContext("/debug", exchange -> {
-                String debugInfo = """
-                        Current dir: %s
-                        Files in current dir: %s
-                        """.formatted(
-                        System.getProperty("user.dir"),
-                        String.join(", ", new File(".").list())
-                );
+            server.createContext("/", exchange -> {
+                System.out.println("📨 Received request for portfolio");
 
-                exchange.getResponseHeaders().set("Content-Type", "text/plain");
-                exchange.sendResponseHeaders(200, debugInfo.length());
-                exchange.getResponseBody().write(debugInfo.getBytes());
+                String html = """
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>SGProducts</title>
+                        <style>
+                            body {
+                                margin: 0;
+                                background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 100%);
+                                min-height: 100vh;
+                                font-family: 'Arial', sans-serif;
+                            }
+                            .logo {
+                                position: absolute;
+                                top: 20px;
+                                left: 20px;
+                            }
+                            .logo-img {
+                                width: 100px;
+                                height: auto;
+                            }
+                            .container {
+                                text-align: center;
+                                padding-top: 250px;
+                            }
+                            .main-title {
+                                color: #00ff00;
+                                text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 80px #00ff00;
+                                font-size: 3em;
+                                margin: 0;
+                            }
+                            .slogan-text {
+                                color: #ffffff;
+                                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+                                font-weight: 300;
+                                margin-top: 20px;
+                                font-size: 1.2em;
+                            }
+                            .nav-top {
+                                position: absolute;
+                                top: 60px;
+                                left: 50%;
+                                transform: translateX(-50%);
+                                display: flex;
+                                gap: 60px;
+                            }
+                            .nav-link {
+                                color: #f5f103;
+                                text-shadow: 0 0 10px rgba(245, 241, 3, 0.5);
+                                margin: 0;
+                                text-decoration: none;
+                            }
+                            .footer {
+                                position: absolute;
+                                bottom: 20px;
+                                width: 100%;
+                                text-align: center;
+                                color: #666;
+                                font-size: 0.9em;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="logo">
+                            <img class="logo-img" src="https://i.ibb.co/nq9050H1/logo.png" alt="Logo">
+                        </div>
+                        <div class="nav-top">
+                            <a class="nav-link">Projects</a>
+                            <a class="nav-link">Info</a>
+                            <a class="nav-link">Contacts</a>
+                        </div>
+                        <div class="container">
+                            <h1 class="main-title">Super Chack</h1>
+                            <h2 class="slogan-text">"From Wild Ideas to Working Code"</h2>
+                        </div>
+                        <div class="footer">
+                            © 2025 SGProducts. Turning ideas into reality.
+                        </div>
+                    </body>
+                    </html>
+                """;
+
+                exchange.getResponseHeaders().set("Content-Type", "text/html; charset=utf-8");
+                exchange.sendResponseHeaders(200, html.getBytes().length);
+                exchange.getResponseBody().write(html.getBytes());
                 exchange.close();
+                System.out.println("✅ Portfolio HTML sent");
             });
-
-            // Раздача статических файлов
-            server.createContext("/", new StaticFileHandler());
 
             server.setExecutor(null);
             server.start();
-
             System.out.println("✅ PORTFOLIO SERVER STARTED!");
-            System.out.println("🌐 Available at: http://0.0.0.0:" + port);
-
             Thread.currentThread().join();
         } catch (Exception e) {
             System.out.println("❌ SERVER ERROR: " + e.getMessage());
             e.printStackTrace();
-        }
-    }
-
-    static class StaticFileHandler implements HttpHandler {
-        @Override
-        public void handle(HttpExchange exchange) throws IOException {
-            String path = exchange.getRequestURI().getPath();
-            if (path.equals("/")) path = "/index.html";
-
-            try {
-                // ПРАВИЛЬНЫЙ ПУТЬ для текущего Dockerfile
-                String fullPath = "src/static" + path;
-                System.out.println("🔍 Searching: " + fullPath);
-
-                byte[] fileBytes = Files.readAllBytes(Paths.get(fullPath));
-                System.out.println("✅ File found! Size: " + fileBytes.length + " bytes");
-
-                exchange.getResponseHeaders().set("Content-Type", "text/html");
-                exchange.sendResponseHeaders(200, fileBytes.length);
-                exchange.getResponseBody().write(fileBytes);
-
-            } catch (IOException e) {
-                System.out.println("❌ File NOT found: " + e.getMessage());
-                String response = "404 - File: " + path;
-                exchange.sendResponseHeaders(404, response.length());
-                exchange.getResponseBody().write(response.getBytes());
-            } finally {
-                exchange.close();
-            }
         }
     }
 }
