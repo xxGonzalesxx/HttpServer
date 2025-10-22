@@ -27,7 +27,7 @@ public class Main {
 
                 try {
                     // Читаем файл из папки Static
-                    File file = new File("/app/Static" + path);
+                    File file = new File("/app/src/Static" + path);
                     // Добавь в обработчик после создания File file:
                     System.out.println("🔍 Looking for: " + file.getAbsolutePath());
                     System.out.println("🔍 File exists: " + file.exists());
