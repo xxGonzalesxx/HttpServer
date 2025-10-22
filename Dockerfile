@@ -1,11 +1,8 @@
-FROM openjdk:17
-WORKDIR /app
+# Переходим в папку проекта
+cd /c/Work/Http_Server_First/
 
-# Копируем исходный код
-COPY src/ ./src/
+# Собираем Docker образ
+docker build -t portfolio-server .
 
-# Компилируем Java
-RUN javac src/Main.java
-
-# Запускаем сервер
-CMD ["java", "-cp", "src", "Main"]
+# Запускаем контейнер
+docker run -p 8080:8080 portfolio-server
