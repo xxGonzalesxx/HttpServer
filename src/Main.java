@@ -27,7 +27,7 @@ public class Main {
 
                 try {
                     // Читаем файл из папки Static
-                    File file = new File("Static" + path);
+                    File file = new File("/app/Static" + path);
 
                     if (file.exists() && !file.isDirectory()) {
                         // Определяем Content-Type
