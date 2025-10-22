@@ -9,109 +9,80 @@ public class Main {
 
         System.out.println("🔧 Starting Portfolio Server...");
         System.out.println("📡 Port: " + port);
+        System.out.println("📁 Serving from: src/Static/");
 
         try {
             HttpServer server = HttpServer.create(new InetSocketAddress("0.0.0.0", port), 0);
 
+            // Обработчик для статических файлов
             server.createContext("/", exchange -> {
-                System.out.println("📨 Received request for portfolio");
+                String path = exchange.getRequestURI().getPath();
 
-                String html = """
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <title>SGProducts</title>
-                        <style>
-                            body {
-                                margin: 0;
-                                background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 100%);
-                                min-height: 100vh;
-                                font-family: 'Arial', sans-serif;
-                            }
-                            .logo {
-                                position: absolute;
-                                top: 20px;
-                                left: 20px;
-                            }
-                            .logo-img {
-                                width: 100px;
-                                height: auto;
-                            }
-                            .container {
-                                text-align: center;
-                                padding-top: 250px;
-                            }
-                            .main-title {
-                                color: #00ff00;
-                                text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 40px #00ff00, 0 0 80px #00ff00;
-                                font-size: 3em;
-                                margin: 0;
-                            }
-                            .slogan-text {
-                                color: #ffffff;
-                                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-                                font-weight: 300;
-                                margin-top: 20px;
-                                font-size: 1.2em;
-                            }
-                            .nav-top {
-                                position: absolute;
-                                top: 60px;
-                                left: 50%;
-                                transform: translateX(-50%);
-                                display: flex;
-                                gap: 60px;
-                            }
-                            .nav-link {
-                                color: #f5f103;
-                                text-shadow: 0 0 10px rgba(245, 241, 3, 0.5);
-                                margin: 0;
-                                text-decoration: none;
-                            }
-                            .footer {
-                                position: absolute;
-                                bottom: 20px;
-                                width: 100%;
-                                text-align: center;
-                                color: #666;
-                                font-size: 0.9em;
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="logo">
-                            <img class="logo-img" src="https://i.ibb.co/nq9050H1/logo.png" alt="Logo">
-                        </div>
-                        <div class="nav-top">
-                            <a class="nav-link">Projects</a>
-                            <a class="nav-link">Info</a>
-                            <a class="nav-link">Contacts</a>
-                        </div>
-                        <div class="container">
-                            <h1 class="main-title">Super Chack</h1>
-                            <h2 class="slogan-text">"From Wild Ideas to Working Code"</h2>
-                        </div>
-                        <div class="footer">
-                            © 2025 SGProducts. Turning ideas into reality.
-                        </div>
-                    </body>
-                    </html>
-                """;
+                // Если корневой путь - отдаем index.html
+                if (path.equals("/")) {
+                    path = "/index.html";
+                }
 
-                exchange.getResponseHeaders().set("Content-Type", "text/html; charset=utf-8");
-                exchange.sendResponseHeaders(200, html.getBytes().length);
-                exchange.getResponseBody().write(html.getBytes());
-                exchange.close();
-                System.out.println("✅ Portfolio HTML sent");
+                System.out.println("📨 Request: " + path);
+
+                try {
+                    // Читаем файл из папки Static
+                    File file = new File("src/Static" + path);
+
+                    if (file.exists() && !file.isDirectory()) {
+                        // Определяем Content-Type
+                        String contentType = getContentType(path);
+
+                        exchange.getResponseHeaders().set("Content-Type", contentType);
+                        exchange.sendResponseHeaders(200, file.length());
+
+                        // Отправляем файл
+                        FileInputStream fis = new FileInputStream(file);
+                        OutputStream os = exchange.getResponseBody();
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+
+                        while ((bytesRead = fis.read(buffer)) != -1) {
+                            os.write(buffer, 0, bytesRead);
+                        }
+
+                        fis.close();
+                        os.close();
+                        System.out.println("✅ Sent: " + path);
+                    } else {
+                        // Файл не найден - 404
+                        String notFound = "<h1>404 - Page Not Found</h1>";
+                        exchange.getResponseHeaders().set("Content-Type", "text/html");
+                        exchange.sendResponseHeaders(404, notFound.getBytes().length);
+                        exchange.getResponseBody().write(notFound.getBytes());
+                        exchange.close();
+                        System.out.println("❌ Not found: " + path);
+                    }
+                } catch (Exception e) {
+                    System.out.println("❌ Error serving: " + path + " - " + e.getMessage());
+                    exchange.sendResponseHeaders(500, 0);
+                    exchange.close();
+                }
             });
 
             server.setExecutor(null);
             server.start();
             System.out.println("✅ PORTFOLIO SERVER STARTED!");
+            System.out.println("🌐 Open: http://localhost:" + port);
             Thread.currentThread().join();
         } catch (Exception e) {
             System.out.println("❌ SERVER ERROR: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private static String getContentType(String path) {
+        if (path.endsWith(".html")) return "text/html";
+        if (path.endsWith(".css")) return "text/css";
+        if (path.endsWith(".js")) return "application/javascript";
+        if (path.endsWith(".png")) return "image/png";
+        if (path.endsWith(".jpg") || path.endsWith(".jpeg")) return "image/jpeg";
+        if (path.endsWith(".gif")) return "image/gif";
+        return "text/plain";
     }
 }

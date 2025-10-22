@@ -1,0 +1,149 @@
+/* СТИЛИ ТОЛЬКО ДЛЯ ГЛАВНОЙ СТРАНИЦЫ (index.html) */
+
+/* Анимированный бокс */
+.rotating-box {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(45deg, #00ff00, #ff0000);
+    margin: 50px auto;
+    animation: rotate 2s linear infinite;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+    border-radius: 10px;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Кнопки призыва к действию */
+.cta-buttons {
+    margin-top: 40px;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-button {
+    background: linear-gradient(45deg, #00ff00, #008800);
+    color: black;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: 2px solid #00ff00;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 255, 0, 0.4);
+    background: linear-gradient(45deg, #00ff00, #00cc00);
+}
+
+/* Терминал */
+.terminal {
+    max-width: 600px;
+    margin: 50px auto;
+    background: #1a1a1a;
+    border: 1px solid #00ff00;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.terminal-header {
+    background: #2d2d2d;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.terminal-btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.terminal-btn.red { background: #ff5f56; }
+.terminal-btn.yellow { background: #ffbd2e; }
+.terminal-btn.green { background: #27c93f; }
+
+.terminal-title {
+    color: #ccc;
+    font-size: 0.9em;
+}
+
+.terminal-body {
+    padding: 20px;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    min-height: 200px;
+}
+
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.prompt {
+    color: #00ff00;
+    margin-right: 8px;
+}
+
+.typing-text {
+    color: #fff;
+}
+
+.cursor {
+    animation: blink 1s infinite;
+    color: #00ff00;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* Адаптивность для элементов главной */
+@media (max-width: 768px) {
+    .rotating-box {
+        width: 80px;
+        height: 80px;
+        margin: 40px auto;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cta-button {
+        width: 200px;
+        text-align: center;
+    }
+    
+    .terminal {
+        margin: 30px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .rotating-box {
+        width: 70px;
+        height: 70px;
+        margin: 30px auto;
+    }
+    
+    .terminal-body {
+        padding: 15px;
+        font-size: 0.9em;
+    }
+}

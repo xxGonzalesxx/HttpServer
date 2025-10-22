@@ -1,0 +1,209 @@
+/* ОСНОВНЫЕ СТИЛИ - для всех страниц */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 100%);
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    color: white;
+}
+
+/* Логотип */
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.logo-img {
+    width: 100px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
+}
+
+/* Навигация */
+.nav-top {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 60px;
+}
+
+.nav-link {
+    color: #f5f103;
+    text-shadow: 0 0 10px rgba(245, 241, 3, 0.5);
+    margin: 0;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    padding: 8px 12px;
+}
+
+.nav-link:hover {
+    color: #00ff00;
+    text-shadow: 0 0 15px #00ff00;
+    transform: translateY(-2px);
+}
+
+/* Основной контейнер */
+.container {
+    text-align: center;
+    padding-top: 200px;
+    padding-bottom: 80px;
+}
+
+/* Заголовки */
+.main-title {
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00,
+                 0 0 20px #00ff00,
+                 0 0 40px #00ff00,
+                 0 0 80px #00ff00;
+    font-size: 3em;
+    margin: 0;
+    transition: text-shadow 0.3s ease;
+    padding: 0 20px;
+}
+
+.main-title:hover {
+    text-shadow: 0 0 15px #00ff00,
+                 0 0 30px #00ff00,
+                 0 0 60px #00ff00,
+                 0 0 100px #00ff00;
+}
+
+.slogan-text {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    font-weight: 300;
+    margin-top: 20px;
+    font-size: 1.2em;
+    padding: 0 20px;
+}
+
+/* Футер */
+.footer {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    color: #666;
+    font-size: 0.9em;
+    padding: 0 10px;
+}
+
+/* Анимации появления */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.animate-on-scroll.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .nav-top {
+        gap: 40px;
+        top: 50px;
+    }
+    
+    .main-title {
+        font-size: 2.5em;
+    }
+    
+    .container {
+        padding-top: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-top {
+        gap: 25px;
+        top: 40px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .main-title {
+        font-size: 2em;
+        padding: 0 15px;
+    }
+    
+    .container {
+        padding-top: 150px;
+    }
+    
+    .slogan-text {
+        font-size: 1.1em;
+        padding: 0 15px;
+    }
+    
+    .logo {
+        top: 15px;
+        left: 15px;
+    }
+    
+    .logo-img {
+        width: 80px;
+    }
+    
+    .nav-link {
+        padding: 6px 10px;
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-top {
+        gap: 20px;
+        top: 30px;
+    }
+    
+    .main-title {
+        font-size: 1.7em;
+        padding: 0 10px;
+    }
+    
+    .container {
+        padding-top: 120px;
+    }
+    
+    .slogan-text {
+        font-size: 1em;
+        margin-top: 15px;
+    }
+    
+    .logo {
+        top: 10px;
+        left: 10px;
+    }
+    
+    .logo-img {
+        width: 70px;
+    }
+    
+    .nav-link {
+        padding: 5px 8px;
+        font-size: 0.9em;
+    }
+    
+    .footer {
+        font-size: 0.8em;
+        bottom: 15px;
+    }
+}

@@ -1,0 +1,176 @@
+/* КОМПОНЕНТЫ - переиспользуемые элементы */
+
+/* Карточки навыков */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin: 50px 0;
+}
+
+.skill-category {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    border-radius: 15px;
+    padding: 25px;
+    transition: all 0.3s ease;
+}
+
+.skill-category:hover {
+    transform: translateY(-5px);
+    border-color: #00ff00;
+    box-shadow: 0 10px 25px rgba(0, 255, 0, 0.2);
+}
+
+.skill-category h3 {
+    color: #00ff00;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.skill-list {
+    list-style: none;
+    padding: 0;
+}
+
+.skill-list li {
+    padding: 8px 0;
+    color: #cccccc;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.skill-list li:last-child {
+    border-bottom: none;
+}
+
+/* Карточки проектов */
+.projects-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.project-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    border-radius: 15px;
+    padding: 25px;
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    border-color: #00ff00;
+    box-shadow: 0 10px 25px rgba(0, 255, 0, 0.2);
+}
+
+.project-title {
+    color: #00ff00;
+    font-size: 1.4em;
+    margin-bottom: 15px;
+}
+
+.project-description {
+    color: #cccccc;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.project-tech {
+    color: #f5f103;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+.project-link {
+    color: #00ff00;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.project-link:hover {
+    text-shadow: 0 0 10px #00ff00;
+}
+
+/* Контакты */
+.contacts-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.contact-item {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    border-color: #00ff00;
+    transform: translateX(10px);
+    box-shadow: 0 10px 25px rgba(0, 255, 0, 0.2);
+}
+
+.contact-item h3 {
+    color: #00ff00;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+}
+
+.contact-link {
+    color: #00ff00;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+}
+
+.contact-link:hover {
+    text-shadow: 0 0 10px #00ff00;
+}
+
+.contact-description {
+    color: #cccccc;
+    margin-top: 8px;
+    font-size: 0.9em;
+}
+
+/* Блок с информацией */
+.info-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.bio-text {
+    line-height: 1.7;
+    font-size: 1.2em;
+    margin-bottom: 40px;
+    text-align: left;
+    color: #ffffff;
+}
+
+.bio-text p {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border-left: 4px solid #00ff00;
+    transition: all 0.3s ease;
+}
+
+.bio-text p:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(5px);
+}
