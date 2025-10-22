@@ -28,6 +28,18 @@ public class Main {
                 try {
                     // Читаем файл из папки Static
                     File file = new File("/app/Static" + path);
+                    // Добавь в обработчик после создания File file:
+                    System.out.println("🔍 Looking for: " + file.getAbsolutePath());
+                    System.out.println("🔍 File exists: " + file.exists());
+                    System.out.println("🔍 Is directory: " + file.isDirectory());
+
+// Добавь проверку текущей директории:
+                    File currentDir = new File(".");
+                    System.out.println("📂 Current dir: " + currentDir.getAbsolutePath());
+                    String[] dirContents = currentDir.list();
+                    if (dirContents != null) {
+                        System.out.println("📂 Contents: " + String.join(", ", dirContents));
+                    }
 
                     if (file.exists() && !file.isDirectory()) {
                         // Определяем Content-Type
