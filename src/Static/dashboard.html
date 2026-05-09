@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SGProducts</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+<div class="logo">
+    <img class="logo-img" src="https://i.ibb.co/nq9050H1/logo.png" alt="Logo">
+</div>
+
+<div class="nav-top">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="projects.html" class="nav-link">Projects</a>
+    <a href="info.html" class="nav-link">Info</a>
+    <a href="contacts.html" class="nav-link">Contacts</a>
+    <a href="#" id="logout-btn" class="nav-link">Logout</a>
+</div>
+
+<div class="container">
+    <h1 class="main-title">👋 Welcome, <span id="username-display">User</span>!</h1>
+    <h2 class="slogan-text">Your Personal Dashboard</h2>
+
+    <div class="info-container">
+        <div class="bio-text">
+            <p>✅ You are successfully logged in!</p>
+            <p>🔐 This is a protected page - only authenticated users can see this.</p>
+            <p>💡 Your session is secure and managed with server-side sessions.</p>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>📊 Account Info</h3>
+                <ul class="skill-list">
+                    <li id="dashboard-username">Username: Loading...</li>
+                    <li id="dashboard-email">Email: Loading...</li>
+                    <li id="dashboard-joined">Joined: Loading...</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <h3>🔧 Quick Actions</h3>
+                <ul class="skill-list">
+                    <li><a href="projects.html" style="color:#00ff00;">View Projects</a></li>
+                    <li><a href="info.html" style="color:#00ff00;">Edit Profile</a></li>
+                    <li><a href="#" id="dashboard-logout" style="color:#ff4444;">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    © 2025 SGProducts. Turning ideas into reality.
+</div>
+
+<script src="js/main.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>
