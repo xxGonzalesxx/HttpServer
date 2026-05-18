@@ -4,7 +4,6 @@ import java.io.*;
 import java.net.*;
 import auth.AuthHandler;
 import auth.SessionManager;
-import auth.database.DatabaseConnection;
 
 public class Main {
     private static SessionManager sessionManager;
